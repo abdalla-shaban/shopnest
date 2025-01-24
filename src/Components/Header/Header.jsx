@@ -1,13 +1,34 @@
+import { Link, NavLink, useNavigate } from "react-router";
+import shopnestLogo from "../../assets/shopnest-logo.svg";
+import { useContext, useState } from "react";
+import { UserContext } from "../../Context/UserContext";
+
+const navLinks = [
+  { label: "home", path: "home" },
+  { label: "products", path: "products" },
+  { label: "cart", path: "cart" },
+  { label: "categories", path: "categories" },
+  { label: "brands", path: "brands" },
+];
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { userToken, setUserToken } = useContext(UserContext);
+
+  const navigate = useNavigate();
+  function handleLogOut() {
+    localStorage.removeItem("userToken");
+    setUserToken(null);
+    navigate("/");
+  }
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-gray-100">
       <nav
-        className="flex items-center justify-between p-3.5 lg:px-8"
+        className="container flex items-center justify-between py-3.5 "
         aria-label="navigation bar"
       >
         <div className="flex items-center me-5">
           <Link to={userToken ? "home" : ""}>
-            <img className="w-32" src={freshCartLogo} alt="Fresh Cart Logo" />
+            <img className="w-32" src={shopnestLogo} alt="Shop Nest Logo" />
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -40,13 +61,13 @@ export default function Header() {
               <NavLink
                 key={i}
                 to={path}
-                className="text-gray-500 capitalize text-sm/6 hover:text-main"
+                className="text-gray-500 capitalize text-sm/6 hover:text-primary"
               >
                 {label}
               </NavLink>
             ))}
         </div>
-        <div className="items-center hidden gap-3 lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden gap-3 items-center lg:flex lg:flex-1 lg:justify-end">
           {userToken ? (
             <button onClick={handleLogOut} className="text-red-600 text-sm/6">
               Logout
@@ -54,16 +75,16 @@ export default function Header() {
           ) : (
             <>
               <NavLink
-                to={"login"}
-                className="text-gray-500 text-sm/6 hover:text-main"
+                to={""}
+                className="text-gray-500 text-sm/6 hover:text-primary"
               >
                 Login
               </NavLink>
               <NavLink
-                to={""}
-                className="text-gray-500 text-sm/6 hover:text-main"
+                to={"signup"}
+                className="text-gray-500 text-sm/6 hover:text-primary"
               >
-                Register
+                Signup
               </NavLink>
             </>
           )}
@@ -77,10 +98,10 @@ export default function Header() {
       >
         {/* Background backdrop, show/hide based on slide-over state. */}
         <div className="fixed inset-0 z-50" />
-        <div className="fixed inset-y-0 right-0 z-50 w-full px-6 py-6 overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
+        <div className="overflow-y-auto fixed inset-y-0 right-0 z-50 px-6 py-6 w-full bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="flex justify-between items-center">
             <Link to={userToken ? "home" : ""}>
-              <img className="w-32" src={freshCartLogo} alt="Fresh Cart Logo" />
+              <img className="w-32" src={shopnestLogo} alt="Shop Nest Logo" />
             </Link>
             <button
               onClick={() => setIsOpen(false)}
@@ -113,7 +134,7 @@ export default function Header() {
                     <NavLink
                       key={i}
                       to={path}
-                      className="block px-3 py-2 -mx-3 font-semibold text-gray-900 rounded-lg text-base/7 hover:bg-gray-50 hover:text-main"
+                      className="block px-3 py-2 -mx-3 font-semibold text-gray-900 rounded-lg text-base/7 hover:bg-gray-50 hover:text-primary"
                     >
                       {label}
                     </NavLink>
@@ -130,16 +151,16 @@ export default function Header() {
                 ) : (
                   <>
                     <NavLink
-                      to={"login"}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 hover:text-main"
+                      to={""}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 hover:text-primary"
                     >
                       Login
                     </NavLink>
                     <NavLink
-                      to={""}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 hover:text-main"
+                      to={"signup"}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 hover:text-primary"
                     >
-                      Register
+                      Signup
                     </NavLink>
                   </>
                 )}

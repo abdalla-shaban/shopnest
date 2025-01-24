@@ -7,3 +7,22 @@
   --color-primary: #000000;
   --color-secondary: #ffffff;
 }
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
+body {
+  @apply font-primary
+}
+
+a.active {
+  @apply text-primary font-semibold scale-105
+}
