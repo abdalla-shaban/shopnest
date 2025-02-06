@@ -6,6 +6,9 @@ import { useParams } from "react-router";
 import ProductDetailsSkeleton from "../ProductDetailsSkeleton/ProductDetailsSkeleton";
 import { useEffect, useState } from "react";
 import { useWishListContext } from "../../Context/WishlistContext";
+import useProducts from "../../Hooks/useProducts";
+import CardSkeleton from "../CardSkeleton/CardSkeleton";
+import ProductsList from "../ProductsList/ProductsList";
 
 const settings = {
   dots: true,
@@ -22,6 +25,7 @@ export default function ProductDetails() {
   const { productId } = useParams();
   const { addItemToCartMutation } = useCart();
   const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading: isProductsLoading } = useProducts();
   const [product, setProduct] = useState({});
   const {
     wishListItems,
@@ -42,6 +46,7 @@ export default function ProductDetails() {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/products/${productId}`
       );
+
       setProduct(data.data);
     } catch (error) {
       console.log(error);
@@ -49,10 +54,14 @@ export default function ProductDetails() {
       setIsLoading(false);
     }
   };
+  const relatedProducts = data?.data.filter(
+    (item) => item?.category?.slug === product?.category?.slug
+  );
+  console.log(product?.images);
 
   useEffect(() => {
     getProductDetails(productId);
-  }, []);
+  }, [productId]);
 
   return (
     <div className="my-10">
@@ -62,7 +71,7 @@ export default function ProductDetails() {
         <div className="flex flex-wrap items-center gap-20 md:gap-5">
           <div className="w-full max-w-full md:max-w-1/3 md:min-w-1/3 slider-container">
             <Slider {...settings}>
-              {product.images.map((path) => (
+              {product?.images?.map((path) => (
                 <div className="text-center" key={path}>
                   <img
                     src={path}
@@ -118,6 +127,17 @@ export default function ProductDetails() {
           </div>
         </div>
       )}
+
+      <div className="mt-20">
+        <h2 className="mb-5 text-4xl font-bold font-secondary">
+          Related Products
+        </h2>
+        {isProductsLoading ? (
+          <CardSkeleton />
+        ) : (
+          <ProductsList products={relatedProducts} />
+        )}
+      </div>
     </div>
   );
 }
