@@ -6,15 +6,19 @@ import { Toaster } from "react-hot-toast";
 import UserContextProvider from "./Context/UserContext.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import CartContextProvider from "./Context/CartContext.jsx";
+
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <UserContextProvider>
-        <App />
-        <Toaster />
-        <ReactQueryDevtools />
+        <CartContextProvider>
+          <App />
+          <Toaster />
+          <ReactQueryDevtools />
+        </CartContextProvider>
       </UserContextProvider>
     </BrowserRouter>
   </QueryClientProvider>

@@ -2,8 +2,8 @@ export default function CardSkeleton() {
   return (
     <>
       <div className="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-        {Array.from({ length: 12 }, () => (
-          <div className="flex flex-col animate-pulse">
+        {Array.from({ length: 12 }, (_, i) => (
+          <div className="flex flex-col animate-pulse" key={i}>
             <div className="w-full mt-2">
               <div className="h-64 bg-gray-200" />
               <div>

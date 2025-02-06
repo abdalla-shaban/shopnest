@@ -1,10 +1,13 @@
-import { FaCartShopping, FaStar } from "react-icons/fa6";
+import { FaCartShopping, FaSpinner, FaStar } from "react-icons/fa6";
 import useProducts from "../../Hooks/useProducts";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 import { Link } from "react-router";
+import { useCart } from "../../Context/CartContext";
 
 export default function Products() {
   const { data, isLoading } = useProducts();
+  const { addItemToCartMutation } = useCart();
+
   return (
     <div className="mt-16">
       <h2 className="mb-10 text-3xl font-bold uppercase font-secondary">
@@ -39,9 +42,21 @@ export default function Products() {
                   </div>
                 </div>
               </Link>
-              <button className="flex items-center justify-center gap-3 py-2 text-white transition-all duration-500 border rounded group-hover:translate-y-0 translate-y-3/1 bg-primary border-primary hover:text-primary hover:bg-transparent">
-                Add to Cart
-                <FaCartShopping />
+              <button
+                disabled={addItemToCartMutation.isPending}
+                onClick={() => {
+                  addItemToCartMutation.mutate(product.id);
+                }}
+                className="flex items-center justify-center gap-3 py-2 text-white transition-all duration-500 border rounded group-hover:translate-y-0 translate-y-3/1 bg-primary border-primary hover:text-primary hover:bg-transparent"
+              >
+                {addItemToCartMutation.isPending ? (
+                  <FaSpinner className="animate-spin" />
+                ) : (
+                  <>
+                    Add to Cart
+                    <FaCartShopping />
+                  </>
+                )}
               </button>
             </div>
           ))}

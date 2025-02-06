@@ -2,19 +2,21 @@ import { Link, NavLink, useNavigate } from "react-router";
 import shopnestLogo from "../../assets/shopnest-logo.svg";
 import { useContext, useState } from "react";
 import { UserContext } from "../../Context/UserContext";
+import { FaCartShopping, FaHeart } from "react-icons/fa6";
+import { useCart } from "../../Context/CartContext";
 
 const navLinks = [
   { label: "home", path: "home" },
   { label: "products", path: "products" },
-  { label: "cart", path: "cart" },
   { label: "categories", path: "categories" },
   { label: "brands", path: "brands" },
 ];
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { userToken, setUserToken } = useContext(UserContext);
-
+  const { data: cartItems } = useCart();
   const navigate = useNavigate();
+
   function handleLogOut() {
     localStorage.removeItem("userToken");
     setUserToken(null);
@@ -31,7 +33,31 @@ export default function Header() {
             <img className="w-32" src={shopnestLogo} alt="Shop Nest Logo" />
           </Link>
         </div>
-        <div className="flex lg:hidden">
+        <div className="flex items-center gap-5 lg:hidden">
+          {userToken ? (
+            <div className="flex items-center gap-5">
+              <Link
+                to={"/cart"}
+                className="relative inline-flex items-center justify-center text-sm font-semibold text-gray-800 "
+              >
+                <FaCartShopping className="text-2xl" />
+                {cartItems?.numOfCartItems ? (
+                  <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-primary text-white">
+                    {cartItems.numOfCartItems}
+                  </span>
+                ) : null}
+              </Link>
+              <Link
+                to={"/wishlist"}
+                className="relative inline-flex items-center justify-center text-sm font-semibold text-gray-800 "
+              >
+                <FaHeart className="text-2xl" />
+                <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-primary text-white">
+                  5
+                </span>
+              </Link>
+            </div>
+          ) : null}
           <button
             onClick={() => setIsOpen(true)}
             type="button"
@@ -39,7 +65,7 @@ export default function Header() {
           >
             <span className="sr-only">Open main menu</span>
             <svg
-              className="size-6"
+              className="size-8"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
@@ -67,11 +93,36 @@ export default function Header() {
               </NavLink>
             ))}
         </div>
-        <div className="hidden gap-3 items-center lg:flex lg:flex-1 lg:justify-end">
+        <div className="items-center hidden gap-3 lg:flex lg:flex-1 lg:justify-end">
           {userToken ? (
-            <button onClick={handleLogOut} className="text-red-600 text-sm/6">
-              Logout
-            </button>
+            <div className="flex items-center gap-6">
+              <Link
+                to={"/cart"}
+                className="relative inline-flex items-center justify-center text-sm font-semibold text-gray-800 "
+              >
+                <FaCartShopping className="text-2xl" />
+                {cartItems?.numOfCartItems ? (
+                  <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-primary text-white">
+                    {cartItems.numOfCartItems}
+                  </span>
+                ) : null}
+              </Link>
+              <Link
+                to={"/wishlist"}
+                className="relative inline-flex items-center justify-center text-sm font-semibold text-gray-800 "
+              >
+                <FaHeart className="text-2xl" />
+                <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-primary text-white">
+                  5
+                </span>
+              </Link>
+              <button
+                onClick={handleLogOut}
+                className="text-red-600 text-sm/6 py-1.5 px-6 border hover:border-red-900 rounded-lg hover:text-white hover:bg-red-500/80 border-red-600"
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <>
               <NavLink
@@ -98,8 +149,8 @@ export default function Header() {
       >
         {/* Background backdrop, show/hide based on slide-over state. */}
         <div className="fixed inset-0 z-50" />
-        <div className="overflow-y-auto fixed inset-y-0 right-0 z-50 px-6 py-6 w-full bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex justify-between items-center">
+        <div className="fixed inset-y-0 right-0 z-50 w-full px-6 py-6 overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="flex items-center justify-between">
             <Link to={userToken ? "home" : ""}>
               <img className="w-32" src={shopnestLogo} alt="Shop Nest Logo" />
             </Link>

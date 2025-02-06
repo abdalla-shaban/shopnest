@@ -11,11 +11,12 @@ import Categories from "./Components/Categories/Categories.jsx";
 import Brands from "./Components/Brands/Brands.jsx";
 import NotFound from "./Components/NotFound/NotFound.jsx";
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword.jsx";
+import ProductDetails from "./Components/ProductDetails/ProductDetails.jsx";
+import AllOrders from "./Components/AllOrders/AllOrders.jsx";
 
 export default function App() {
   return (
     <Routes>
-      {localStorage.getItem("userToken")}
       <Route path="" element={<Layout />}>
         <Route
           index
@@ -62,6 +63,22 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="product-details/:productId"
+          element={
+            <ProtectedRoute>
+              <ProductDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="allorders"
+          element={
+            <ProtectedRoute>
+              <AllOrders />
             </ProtectedRoute>
           }
         />
