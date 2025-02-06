@@ -13,6 +13,7 @@ import NotFound from "./Components/NotFound/NotFound.jsx";
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword.jsx";
 import ProductDetails from "./Components/ProductDetails/ProductDetails.jsx";
 import AllOrders from "./Components/AllOrders/AllOrders.jsx";
+import WishList from "./Components/WishList/WishList.jsx";
 
 export default function App() {
   return (
@@ -55,6 +56,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="wishlist"
+          element={
+            <ProtectedRoute>
+              <WishList />
             </ProtectedRoute>
           }
         />

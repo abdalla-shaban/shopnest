@@ -1,12 +1,26 @@
-import { FaCartShopping, FaSpinner, FaStar } from "react-icons/fa6";
+import { FaCartShopping, FaHeart, FaSpinner, FaStar } from "react-icons/fa6";
 import useProducts from "../../Hooks/useProducts";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 import { Link } from "react-router";
 import { useCart } from "../../Context/CartContext";
+import { useWishListContext } from "../../Context/WishlistContext";
 
 export default function Products() {
   const { data, isLoading } = useProducts();
   const { addItemToCartMutation } = useCart();
+  const {
+    addItemToWishListMutation,
+    removeItemFromWishListMutation,
+    wishListItems,
+  } = useWishListContext();
+  const isInWishList = (id) => {
+    const foundItem = wishListItems?.data.find((item) => item.id === id);
+    if (foundItem) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <div className="mt-16">
@@ -23,6 +37,18 @@ export default function Products() {
               key={product.id}
               className="relative flex flex-col overflow-hidden group"
             >
+              <button
+                onClick={() => {
+                  isInWishList(product.id)
+                    ? removeItemFromWishListMutation.mutate(product.id)
+                    : addItemToWishListMutation.mutate(product.id);
+                }}
+                className={`absolute flex items-center justify-center transition-all duration-500 rounded-full size-8 bg-primary/10 top-3 group-hover:right-3 hover:scale-110 -right-32 ${
+                  isInWishList(product.id) ? "text-red-500" : ""
+                }`}
+              >
+                <FaHeart size={18} />
+              </button>
               <Link
                 className="flex flex-col flex-1"
                 to={`/product-details/${product.id}`}

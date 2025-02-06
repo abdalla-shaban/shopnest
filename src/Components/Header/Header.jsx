@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../Context/UserContext";
 import { FaCartShopping, FaHeart } from "react-icons/fa6";
 import { useCart } from "../../Context/CartContext";
+import { useWishListContext } from "../../Context/WishlistContext";
 
 const navLinks = [
   { label: "home", path: "home" },
@@ -15,6 +16,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { userToken, setUserToken } = useContext(UserContext);
   const { data: cartItems } = useCart();
+  const { wishListItems } = useWishListContext();
   const navigate = useNavigate();
 
   function handleLogOut() {
@@ -52,9 +54,11 @@ export default function Header() {
                 className="relative inline-flex items-center justify-center text-sm font-semibold text-gray-800 "
               >
                 <FaHeart className="text-2xl" />
-                <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-primary text-white">
-                  5
-                </span>
+                {wishListItems?.count ? (
+                  <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-primary text-white">
+                    {wishListItems.count}
+                  </span>
+                ) : null}
               </Link>
             </div>
           ) : null}
@@ -112,9 +116,11 @@ export default function Header() {
                 className="relative inline-flex items-center justify-center text-sm font-semibold text-gray-800 "
               >
                 <FaHeart className="text-2xl" />
-                <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-primary text-white">
-                  5
-                </span>
+                {wishListItems?.count ? (
+                  <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-primary text-white">
+                    {wishListItems.count}
+                  </span>
+                ) : null}
               </Link>
               <button
                 onClick={handleLogOut}

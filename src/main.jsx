@@ -7,6 +7,7 @@ import UserContextProvider from "./Context/UserContext.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import CartContextProvider from "./Context/CartContext.jsx";
+import WishlistContextProvider from "./Context/WishlistContext.jsx";
 
 const queryClient = new QueryClient();
 
@@ -15,9 +16,11 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <UserContextProvider>
         <CartContextProvider>
-          <App />
-          <Toaster />
-          <ReactQueryDevtools />
+          <WishlistContextProvider>
+            <App />
+            <Toaster />
+            <ReactQueryDevtools />
+          </WishlistContextProvider>
         </CartContextProvider>
       </UserContextProvider>
     </BrowserRouter>
