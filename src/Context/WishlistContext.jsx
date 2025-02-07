@@ -1,46 +1,46 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { createContext, useContext, useEffect } from "react";
+import { useUserContext } from "./UserContext";
 import toast from "react-hot-toast";
 
 const WishListContext = createContext();
-const headers = {
-  token: localStorage.getItem("userToken"),
-};
-
-const getLoggedUserWishList = async () => {
-  const { data } = await axios.get(
-    `${import.meta.env.VITE_BASE_URL}/wishlist`,
-    {
-      headers,
-    }
-  );
-  return data;
-};
-
-const addItemToWishList = async (productId) => {
-  await axios.post(
-    `${import.meta.env.VITE_BASE_URL}/wishlist`,
-    { productId },
-    { headers }
-  );
-};
-
-const removeItemFromWishList = async (productId) => {
-  await axios.delete(`${import.meta.env.VITE_BASE_URL}/wishlist/${productId}`, {
-    headers,
-  });
-};
 
 export default function WishlistContextProvider({ children }) {
+  const { userToken } = useUserContext();
   const queryClient = useQueryClient();
-  const { data: wishListItems, isLoading } = useQuery({
+  const {
+    data: wishListItems,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["wishlistItems"],
-    queryFn: getLoggedUserWishList,
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/wishlist`,
+        {
+          headers: {
+            token: userToken,
+          },
+        }
+      );
+      return data;
+    },
+    refetchOnWindowFocus: false,
   });
 
   const addItemToWishListMutation = useMutation({
-    mutationFn: addItemToWishList,
+    mutationFn: async (productId) => {
+      await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/wishlist`,
+        { productId },
+        {
+          headers: {
+            token: userToken,
+          },
+        }
+      );
+    },
     onMutate: () => {
       toast.loading("In Progress!", { id: "wishlistMutationLoading" });
     },
@@ -54,7 +54,16 @@ export default function WishlistContextProvider({ children }) {
   });
 
   const removeItemFromWishListMutation = useMutation({
-    mutationFn: removeItemFromWishList,
+    mutationFn: async (productId) => {
+      await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/wishlist/${productId}`,
+        {
+          headers: {
+            token: userToken,
+          },
+        }
+      );
+    },
     onMutate: () => {
       toast.loading("In Progress!", { id: "wishlistItemsMutation" });
     },
@@ -68,7 +77,7 @@ export default function WishlistContextProvider({ children }) {
   });
 
   useEffect(() => {
-    getLoggedUserWishList();
+    refetch();
   }, []);
   return (
     <WishListContext.Provider

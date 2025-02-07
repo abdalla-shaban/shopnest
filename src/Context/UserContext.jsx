@@ -28,6 +28,7 @@ export default function UserContextProvider({ children }) {
     queryKey: ["verifyToken", userToken],
     queryFn: verifyToken,
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
