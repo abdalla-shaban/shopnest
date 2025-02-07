@@ -4,7 +4,7 @@ import { FaHeart } from "react-icons/fa6";
 
 const badgesImages = [
   {
-    src: "../../assets/Badge.png",
+    src: "./src/assets/Badge.png",
     alt: "Visa Badge",
   },
   {
