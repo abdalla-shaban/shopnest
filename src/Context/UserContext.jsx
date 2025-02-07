@@ -17,36 +17,36 @@ const verifyToken = async () => {
 };
 
 export default function UserContextProvider({ children }) {
-  const [userToken, setUserToken] = useState(null);
+  const [userToken, setUserToken] = useState(localStorage.getItem("userToken"));
 
-  const { data: user, refetch } = useQuery({
-    queryKey: ["verifyToken"],
+  const {
+    data: user,
+    refetch,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["verifyToken", userToken],
     queryFn: verifyToken,
+    retry: false,
   });
-  // const verifyToken = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `${import.meta.env.VITE_BASE_URL}/auth/verifyToken`,
-  //       {
-  //         headers: {
-  //           token: localStorage.getItem("userToken"),
-  //         },
-  //       }
-  //     );
-  //     setUser(data);
-  //   } catch (error) {
-  //     setUser(null);
-  //     toast.error(error.response.data.message);
-  //   }
-  // };
 
   useEffect(() => {
-    localStorage.getItem("userToken") &&
-      setUserToken(localStorage.getItem("userToken"));
-  }, []);
+    if (userToken) {
+      localStorage.setItem("userToken", userToken);
+    }
+  }, [userToken]);
+
+  useEffect(() => {
+    if (isError) {
+      localStorage.removeItem("userToken");
+      setUserToken(null);
+    }
+  }, [isError]);
 
   return (
-    <UserContext.Provider value={{ userToken, setUserToken, user }}>
+    <UserContext.Provider
+      value={{ userToken, setUserToken, user, refetch, isLoading, isError }}
+    >
       {children}
     </UserContext.Provider>
   );

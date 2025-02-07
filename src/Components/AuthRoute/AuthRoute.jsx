@@ -1,7 +1,10 @@
 import { Navigate } from "react-router";
+import { useUserContext } from "./../../Context/UserContext";
 
 export default function AuthRoute({ children }) {
-  if (localStorage.getItem("userToken")) {
+  const { userToken, isLoading, user } = useUserContext();
+
+  if (userToken && !isLoading && user) {
     return <Navigate to="/home" />;
   }
   return <>{children}</>;

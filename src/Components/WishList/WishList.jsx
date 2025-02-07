@@ -35,7 +35,7 @@ export default function WishList() {
         <CardSkeleton />
       ) : (
         <>
-          {wishListItems.data.length ? (
+          {wishListItems?.data.length ? (
             <>
               <h2 className="mt-16 mb-10 text-3xl font-bold uppercase font-secondary">
                 Wishlist Products
