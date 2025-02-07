@@ -71,6 +71,7 @@ export default function CartTable({ setIsCash, setIsCheckedOut }) {
                       <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                         <div className="flex items-center justify-center gap-3">
                           <button
+                            disabled={product.count == 1}
                             type="button"
                             onClick={() =>
                               updateItemQuantityMutation.mutate({
