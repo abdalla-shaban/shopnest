@@ -206,7 +206,36 @@ export default function CartTable({ setIsCash, setIsCheckedOut }) {
           </button>
           <button
             onClick={() => {
-              clearUserCartMutation.mutate();
+              toast(
+                (t) => (
+                  <div className="text-sm">
+                    <h4 className="font-semibold">
+                      Do you want to clear your cart ?
+                    </h4>
+                    <div className="flex items-center justify-center gap-3 mt-3">
+                      <button
+                        className="px-4 py-1.5 rounded-lg bg-red-800/10 border text-red-500 border-red-500"
+                        onClick={() => {
+                          clearUserCartMutation.mutate();
+                          toast.dismiss(t.id);
+                        }}
+                      >
+                        yes
+                      </button>
+                      <button
+                        className="px-4 py-1.5 rounded-lg bg-blue-800/10 border  border-blue-800"
+                        onClick={() => toast.dismiss(t.id)}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                ),
+                {
+                  duration: Infinity,
+                  position: "top-center",
+                }
+              );
             }}
             className="px-6 py-2 text-white transition-all duration-300 bg-red-500 border border-red-500 rounded-lg hover:bg-transparent hover:text-red-500"
           >
