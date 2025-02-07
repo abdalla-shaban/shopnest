@@ -1,11 +1,11 @@
 import Hero from "../Hero/Hero";
-import Products from "../Products/Products";
+import RecentProducts from "../RecentProducts/RecentProducts";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Products />
+      <RecentProducts />
     </>
   );
 }
