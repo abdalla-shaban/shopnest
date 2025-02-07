@@ -19,10 +19,7 @@ export default function ProductCard({ product }) {
     }
   };
   return (
-    <div
-      key={product.id}
-      className="relative flex flex-col overflow-hidden group"
-    >
+    <div className="relative flex flex-col overflow-hidden group">
       <button
         onClick={() => {
           isInWishList(product.id)

@@ -6,7 +6,7 @@ export default function Products() {
   const { data, isLoading } = useProducts();
 
   return (
-    <div className="mt-16">
+    <div className="my-16">
       <h2 className="mb-10 text-3xl font-bold uppercase font-secondary">
         Products
       </h2>
