@@ -1,29 +1,11 @@
 import { Link } from "react-router";
 import shopnestLogo from "../../assets/shopnest-logo.svg";
+import visa from "../../assets/Badge.png";
+import masterCard from "../../assets/Badge-1.png";
+import payPal from "../../assets/Badge-2.png";
+import applePay from "../../assets/Badge-3.png";
+import googlePay from "../../assets/Badge-4.png";
 import { FaHeart } from "react-icons/fa6";
-
-const badgesImages = [
-  {
-    src: "./src/assets/Badge.png",
-    alt: "Visa Badge",
-  },
-  {
-    src: "/src/assets/Badge-1.png",
-    alt: "Master Card Badge",
-  },
-  {
-    src: "/src/assets/Badge-2.png",
-    alt: "PayPal Badge",
-  },
-  {
-    src: "/src/assets/Badge-3.png",
-    alt: "Apple Pay Badge",
-  },
-  {
-    src: "/src/assets/Badge-4.png",
-    alt: "Google Pay Badge",
-  },
-];
 
 export default function Footer() {
   return (
@@ -37,14 +19,31 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap">
-          {badgesImages.map(({ src, alt }, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={alt}
-              className="object-contain max-w-16 md:max-w-28"
-            />
-          ))}
+          <img
+            src={visa}
+            alt={"visa Badge"}
+            className="object-contain max-w-16 md:max-w-28"
+          />
+          <img
+            src={masterCard}
+            alt={"Master Card Badge"}
+            className="object-contain max-w-16 md:max-w-28"
+          />
+          <img
+            src={payPal}
+            alt={"PayPal Badge"}
+            className="object-contain max-w-16 md:max-w-28"
+          />
+          <img
+            src={applePay}
+            alt={"ApplePay Badge"}
+            className="object-contain max-w-16 md:max-w-28"
+          />
+          <img
+            src={googlePay}
+            alt={"GooglePay Badge"}
+            className="object-contain max-w-16 md:max-w-28"
+          />
         </div>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-1 px-2 py-5 border-t border-t-gray-200">
