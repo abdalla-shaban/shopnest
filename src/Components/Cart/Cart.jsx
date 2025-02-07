@@ -4,6 +4,8 @@ import CartTable from "../CartTable/CartTable";
 import CartSkeleton from "../CartSkeleton/CartSkeleton";
 import CheckOut from "../CheckOut/CheckOut";
 import { useCart } from "../../Context/CartContext";
+import { FaArrowRight } from "react-icons/fa6";
+import emptyCart from "../../assets/empty.svg";
 
 export default function Cart() {
   const { data: cartItems, isLoading } = useCart();
@@ -19,11 +21,20 @@ export default function Cart() {
       ) : isLoading ? (
         <CartSkeleton />
       ) : (
-        <div className="flex flex-col items-center justify-center gap-4 mt-5">
-          <h2 className="text-xl font-semibold">Cart is Empty</h2>
-          <Link to={"/products"} className="underline">
-            Explore Products ?
-          </Link>
+        <div className="min-h-[calc(100vh-52px)] flex flex-col gap-10 items-center justify-center">
+          <img className="size-80" src={emptyCart} alt="Empty Cart" />
+          <div className="flex flex-col gap-3">
+            <h2 className="font-bold text-center uppercase font-secondary">
+              Cart is Empty
+            </h2>
+            <Link
+              className="flex items-center gap-3 font-semibold text-center underline"
+              to={"/products"}
+            >
+              Explore Products
+              <FaArrowRight />
+            </Link>
+          </div>
         </div>
       )}
     </div>

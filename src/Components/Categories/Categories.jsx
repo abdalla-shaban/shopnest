@@ -15,7 +15,6 @@ export default function Categories() {
     queryFn: getCategories,
     select: (data) => data?.data,
   });
-  console.log("🚀 ~ Categories ~ categories:", categories);
 
   return (
     <>

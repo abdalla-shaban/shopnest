@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function Hero() {
   return (
     <div className="flex flex-col items-center justify-center flex-1 min-h-[calc(100vh-52px)] text-center">
@@ -8,9 +10,12 @@ export default function Hero() {
         Browse through our diverse range of products designed to bring out your
         cater to your sense of style
       </p>
-      <button className="px-10 py-2.5 text-white rounded-full border transition-all duration-300 bg-primary border-primary hover:bg-transparent hover:text-primary">
+      <Link
+        to={"/products"}
+        className="px-10 py-2.5 text-white rounded-full border transition-all duration-300 bg-primary border-primary hover:bg-transparent hover:text-primary"
+      >
         Shop Now
-      </button>
+      </Link>
     </div>
   );
 }

@@ -191,6 +191,14 @@ export default function CartTable({ setIsCash, setIsCheckedOut }) {
                       >
                         Card
                       </button>
+                      <button
+                        className="px-4 py-1.5 rounded-lg bg-gray-800/10 border  border-gray-800"
+                        onClick={() => {
+                          toast.dismiss(t.id);
+                        }}
+                      >
+                        Cancle
+                      </button>
                     </div>
                   </div>
                 ),

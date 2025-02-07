@@ -191,6 +191,7 @@ export default function Header() {
                     <NavLink
                       key={i}
                       to={path}
+                      onClick={() => setIsOpen(false)}
                       className="block px-3 py-2 -mx-3 font-semibold text-gray-900 rounded-lg text-base/7 hover:bg-gray-50 hover:text-primary"
                     >
                       {label}
