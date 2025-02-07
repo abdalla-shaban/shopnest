@@ -50,7 +50,7 @@ const clearUserCart = async () => {
 };
 
 export default function CartContextProvider({ children }) {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["cartItems"],
     queryFn: getLoggedUserCart,
   });
@@ -86,6 +86,7 @@ export default function CartContextProvider({ children }) {
         data,
         isLoading,
         isError,
+        refetch,
         addItemToCartMutation,
         removeItemFromCartMutation,
         updateItemQuantityMutation,

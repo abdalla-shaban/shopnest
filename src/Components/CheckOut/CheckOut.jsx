@@ -3,11 +3,10 @@ import * as Yup from "yup";
 import CustomInput from "../CustomInput/CustomInput";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaSpinner } from "react-icons/fa6";
-import { useDispatch, useSelector } from "react-redux";
-import { getLoggedUserCart } from "../../Store/Slices/cartSlice";
 import { useNavigate } from "react-router";
+import { useCart } from "../../Context/CartContext";
 
 const validationSchema = Yup.object().shape({
   details: Yup.string().required("Details is Required"),
@@ -16,10 +15,9 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function CheckOut({ setIsCheckedOut, isCash }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { cartItems } = useSelector((state) => state.cartSlice);
+  const { data: cartItems } = useCart();
 
   async function handleCheckOut(values) {
     let loadingToaster = toast.loading("in progress !!");
@@ -28,7 +26,7 @@ export default function CheckOut({ setIsCheckedOut, isCash }) {
       setIsLoading(true);
       let { data } = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/orders/checkout-session/${
-          cartItems._id
+          cartItems.cartId
         }?url=http://localhost:5173`,
         {
           shippingAddress: values,
@@ -52,8 +50,8 @@ export default function CheckOut({ setIsCheckedOut, isCash }) {
 
     try {
       setIsLoading(true);
-      let { data } = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/orders/${cartItems._id}`,
+      await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/orders/${cartItems.cartId}`,
         {
           shippingAddress: values,
         },
@@ -82,10 +80,6 @@ export default function CheckOut({ setIsCheckedOut, isCash }) {
       onSubmit: isCash ? handleCashOrder : handleCheckOut,
       validationSchema,
     });
-
-  useEffect(() => {
-    dispatch(getLoggedUserCart());
-  }, []);
 
   return (
     <>

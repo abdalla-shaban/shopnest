@@ -168,27 +168,27 @@ export default function CartTable({ setIsCash, setIsCheckedOut }) {
               toast(
                 (t) => (
                   <div className="text-sm">
-                    <h4 className="font-semibold">Cash Order ?</h4>
+                    <h4 className="font-semibold">Order Type ?</h4>
                     <div className="flex items-center justify-center gap-3 mt-3">
                       <button
-                        className="px-4 py-1.5 rounded-lg bg-red-800/10 border text-red-500 border-red-500"
+                        className="px-4 py-1.5 rounded-lg bg-blue-800/10 border  border-blue-800"
                         onClick={() => {
                           toast.dismiss(t.id);
                           setIsCheckedOut(true);
                           setIsCash(true);
                         }}
                       >
-                        yes
+                        Cash
                       </button>
                       <button
-                        className="px-4 py-1.5 rounded-lg bg-blue-800/10 border  border-blue-800"
+                        className="px-4 py-1.5 rounded-lg bg-green-800/10 border  border-green-800"
                         onClick={() => {
                           toast.dismiss(t.id);
                           setIsCheckedOut(true);
                           setIsCash(false);
                         }}
                       >
-                        No
+                        Card
                       </button>
                     </div>
                   </div>
