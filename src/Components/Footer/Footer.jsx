@@ -4,7 +4,7 @@ import { FaHeart } from "react-icons/fa6";
 
 const badgesImages = [
   {
-    src: "/src/assets/Badge.png",
+    src: "../../assets/Badge.png",
     alt: "Visa Badge",
   },
   {
@@ -28,7 +28,7 @@ const badgesImages = [
 export default function Footer() {
   return (
     <footer className="pt-4 bg-gray-100">
-      <div className="py-6 container flex flex-col md:flex-row items-center md:items-stretch md:justify-between gap-5">
+      <div className="container flex flex-col items-center gap-5 py-6 md:flex-row md:items-stretch md:justify-between">
         <div className="flex flex-col gap-3">
           <img src={shopnestLogo} alt="shopnest logo" className="w-42" />
           <p className="max-w-sm">
@@ -47,9 +47,9 @@ export default function Footer() {
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-center flex-wrap gap-1 py-5 px-2 border-t border-t-gray-200">
+      <div className="flex flex-wrap items-center justify-center gap-1 px-2 py-5 border-t border-t-gray-200">
         <p> Shop.co © 2025, All Rights Reserved</p>
-        <p className="flex items-center justify-center gap-1 flex-wrap">
+        <p className="flex flex-wrap items-center justify-center gap-1">
           Developed with <FaHeart className="text-red-500" /> by
           <Link to={""} className="font-medium">
             Abdullah Madkour
