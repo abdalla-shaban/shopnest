@@ -27,7 +27,7 @@ export default function CheckOut({ setIsCheckedOut, isCash }) {
       let { data } = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/orders/checkout-session/${
           cartItems.cartId
-        }?url=http://localhost:5173`,
+        }?url=https://shopnest-sigma.vercel.app/`,
         {
           shippingAddress: values,
         },
