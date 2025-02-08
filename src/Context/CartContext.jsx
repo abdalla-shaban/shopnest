@@ -9,7 +9,7 @@ const CartContext = createContext();
 export default function CartContextProvider({ children }) {
   const { userToken } = useUserContext();
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["cartItems"],
+    queryKey: ["cartItems", userToken],
     queryFn: async function () {
       const { data } = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/cart`,
